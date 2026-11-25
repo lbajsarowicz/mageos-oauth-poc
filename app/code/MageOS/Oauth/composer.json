@@ -1,0 +1,24 @@
+{
+    "name": "mage-os/module-oauth",
+    "description": "OAuth 2.1 authorization server for Mage-OS, built on league/oauth2-server",
+    "type": "magento2-module",
+    "license": ["OSL-3.0", "AFL-3.0"],
+    "require": {
+        "php": "~8.3.0||~8.4.0||~8.5.0",
+        "ext-openssl": "*",
+        "defuse/php-encryption": "^2.4",
+        "laminas/laminas-diactoros": "^3.0",
+        "lcobucci/jwt": "^5.6",
+        "league/oauth2-server": "^9.4",
+        "mage-os/module-oauth-api": "*",
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-store": "*",
+        "magento/module-user": "*",
+        "psr/http-message": "^2.0"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {"MageOS\\Oauth\\": ""}
+    }
+}

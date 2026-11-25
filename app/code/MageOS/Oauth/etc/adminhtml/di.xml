@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\Model\Url">
+        <plugin name="mageos_oauth_resume_pending_authorization"
+                type="MageOS\Oauth\Plugin\ResumePendingAuthorization" sortOrder="10"/>
+    </type>
+</config>

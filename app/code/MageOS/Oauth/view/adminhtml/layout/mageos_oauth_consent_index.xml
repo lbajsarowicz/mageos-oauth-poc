@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block name="mageos_oauth.consent" template="MageOS_Oauth::consent.phtml">
+                <arguments>
+                    <argument name="consent" xsi:type="object">MageOS\Oauth\ViewModel\Consent</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

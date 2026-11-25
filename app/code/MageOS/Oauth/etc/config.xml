@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mageos_oauth>
+            <general>
+                <enabled>1</enabled>
+                <dynamic_client_registration>1</dynamic_client_registration>
+                <access_token_lifetime>3600</access_token_lifetime>
+                <refresh_token_lifetime>2592000</refresh_token_lifetime>
+                <auth_code_lifetime>600</auth_code_lifetime>
+            </general>
+        </mageos_oauth>
+    </default>
+</config>

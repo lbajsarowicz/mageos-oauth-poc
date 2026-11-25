@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageOS\OauthApi\Api\TokenValidatorInterface" type="MageOS\Oauth\Model\TokenValidator"/>
+    <preference for="MageOS\OauthApi\Api\ResourceServerRegistryInterface" type="MageOS\Oauth\Model\ResourceServerRegistry"/>
+    <preference for="MageOS\OauthApi\Api\PrincipalAuthorizerInterface" type="MageOS\Oauth\Model\Principal\PrincipalAuthorizerPool"/>
+    <preference for="MageOS\OauthApi\Api\GrantRevokerInterface" type="MageOS\Oauth\Model\GrantRevoker"/>
+    <type name="MageOS\Oauth\Model\Principal\PrincipalAuthorizerPool">
+        <arguments>
+            <argument name="authorizers" xsi:type="array">
+                <item name="admin" xsi:type="object">MageOS\Oauth\Model\Principal\AdminAuthorizer</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mageos_oauth_keys_generate" xsi:type="object">MageOS\Oauth\Console\Command\GenerateKeys\Proxy</item>
+                <item name="mageos_oauth_revoke" xsi:type="object">MageOS\Oauth\Console\Command\Revoke\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

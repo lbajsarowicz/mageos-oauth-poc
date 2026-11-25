@@ -1,0 +1,14 @@
+{
+    "name": "mage-os/module-oauth-api",
+    "description": "Service contracts of the Mage-OS OAuth 2.1 authorization server",
+    "type": "magento2-module",
+    "license": ["OSL-3.0", "AFL-3.0"],
+    "require": {
+        "php": "~8.3.0||~8.4.0||~8.5.0",
+        "magento/framework": "*"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {"MageOS\\OauthApi\\": ""}
+    }
+}

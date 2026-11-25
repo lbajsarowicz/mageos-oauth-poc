@@ -67,6 +67,7 @@
         "laravel/prompts": "^0.3.8",
         "league/flysystem": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "league/oauth2-server": "^9.4",
         "magento/composer": "^1.10.2-beta4",
         "magento/composer-dependency-version-audit-plugin": "^0.1",
         "magento/magento-composer-installer": ">=0.4.0",

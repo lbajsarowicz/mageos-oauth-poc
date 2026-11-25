@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mageos_oauth_client" resource="default" engine="innodb" comment="OAuth 2.1 Clients">
+        <column xsi:type="varchar" name="client_id" length="80" nullable="false" comment="Client ID"/>
+        <column xsi:type="varchar" name="client_name" length="255" nullable="false" comment="Client Name"/>
+        <column xsi:type="text" name="redirect_uris" nullable="false" comment="Redirect URIs as JSON"/>
+        <column xsi:type="varchar" name="grant_types" length="255" nullable="false" comment="Grant Types, Space Separated"/>
+        <column xsi:type="varchar" name="secret_hash" length="255" nullable="true" comment="Client Secret Hash, Null For Public Clients"/>
+        <column xsi:type="varchar" name="registration" length="16" nullable="false" comment="How The Client Was Registered"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="client_id"/>
+        </constraint>
+    </table>
+    <table name="mageos_oauth_auth_code" resource="default" engine="innodb" comment="OAuth 2.1 Authorization Codes">
+        <column xsi:type="varchar" name="code_id" length="80" nullable="false" comment="Code ID"/>
+        <column xsi:type="varchar" name="client_id" length="80" nullable="false" comment="Client ID"/>
+        <column xsi:type="varchar" name="principal" length="64" nullable="false" comment="Principal"/>
+        <column xsi:type="text" name="scopes" nullable="false" comment="Scopes as JSON"/>
+        <column xsi:type="varchar" name="resource" length="255" nullable="false" comment="Bound Resource URI"/>
+        <column xsi:type="datetime" name="expires_at" nullable="false" comment="Expires At, UTC"/>
+        <column xsi:type="smallint" name="revoked" unsigned="true" nullable="false" default="0" comment="Is Revoked"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="code_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGEOS_OAUTH_AUTH_CODE_CLIENT_ID_MAGEOS_OAUTH_CLIENT_CLIENT_ID"
+                    table="mageos_oauth_auth_code" column="client_id" referenceTable="mageos_oauth_client"
+                    referenceColumn="client_id" onDelete="CASCADE"/>
+    </table>
+    <table name="mageos_oauth_access_token" resource="default" engine="innodb" comment="OAuth 2.1 Access Tokens">
+        <column xsi:type="varchar" name="token_id" length="80" nullable="false" comment="Token ID (JWT jti)"/>
+        <column xsi:type="varchar" name="client_id" length="80" nullable="false" comment="Client ID"/>
+        <column xsi:type="varchar" name="principal" length="64" nullable="false" comment="Principal"/>
+        <column xsi:type="text" name="scopes" nullable="false" comment="Scopes as JSON"/>
+        <column xsi:type="varchar" name="resource" length="255" nullable="false" comment="Bound Resource URI"/>
+        <column xsi:type="datetime" name="expires_at" nullable="false" comment="Expires At, UTC"/>
+        <column xsi:type="smallint" name="revoked" unsigned="true" nullable="false" default="0" comment="Is Revoked"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="token_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGEOS_OAUTH_ACCESS_TOKEN_CLIENT_ID_MAGEOS_OAUTH_CLIENT_CLIENT_ID"
+                    table="mageos_oauth_access_token" column="client_id" referenceTable="mageos_oauth_client"
+                    referenceColumn="client_id" onDelete="CASCADE"/>
+        <index referenceId="MAGEOS_OAUTH_ACCESS_TOKEN_PRINCIPAL" indexType="btree">
+            <column name="principal"/>
+        </index>
+    </table>
+    <table name="mageos_oauth_refresh_token" resource="default" engine="innodb" comment="OAuth 2.1 Refresh Tokens">
+        <column xsi:type="varchar" name="token_id" length="80" nullable="false" comment="Token ID"/>
+        <column xsi:type="varchar" name="access_token_id" length="80" nullable="false" comment="Access Token ID"/>
+        <column xsi:type="varchar" name="resource" length="255" nullable="false" comment="Bound Resource URI"/>
+        <column xsi:type="datetime" name="expires_at" nullable="false" comment="Expires At, UTC"/>
+        <column xsi:type="smallint" name="revoked" unsigned="true" nullable="false" default="0" comment="Is Revoked"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="token_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="MAGEOS_OAUTH_REFRESH_TOKEN_ACCESS_TOKEN_ID_MAGEOS_OAUTH_ACCESS_TOKEN_TOKEN_ID"
+                    table="mageos_oauth_refresh_token" column="access_token_id"
+                    referenceTable="mageos_oauth_access_token" referenceColumn="token_id" onDelete="CASCADE"/>
+    </table>
+</schema>

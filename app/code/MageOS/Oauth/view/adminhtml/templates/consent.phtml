@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \MageOS\Oauth\ViewModel\Consent $consent */
+$consent = $block->getData('consent');
+$grantable = $consent->getGrantableScopes();
+?>
+<div class="admin__fieldset-wrapper">
+    <div class="admin__fieldset-wrapper-title">
+        <strong class="title">
+            <?= $escaper->escapeHtml(
+                __('"%1" wants access to %2', $consent->getClientName(), $consent->getResourceLabel())
+            ) ?>
+        </strong>
+    </div>
+    <div class="admin__fieldset-wrapper-content">
+        <p>
+            <?= $escaper->escapeHtml(__('After you approve, the browser returns to:')) ?>
+            <strong><?= $escaper->escapeHtml($consent->getRedirectTarget()) ?></strong>
+        </p>
+        <p>
+            <?= $escaper->escapeHtml(__('Resource:')) ?>
+            <code><?= $escaper->escapeHtml($consent->getResourceUri()) ?></code>
+            &middot;
+            <?= $escaper->escapeHtml(__('Client ID:')) ?>
+            <code><?= $escaper->escapeHtml($consent->getClientId()) ?></code>
+        </p>
+        <?php if ($grantable): ?>
+            <p><?= $escaper->escapeHtml(__('The application will act as you, limited to:')) ?></p>
+            <ul>
+                <?php foreach ($grantable as $scope): ?>
+                    <li>
+                        <code><?= $escaper->escapeHtml($scope->getName()) ?></code>
+                        &mdash; <?= $escaper->escapeHtml($scope->getDescription()) ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p class="message message-error">
+                <?= $escaper->escapeHtml(__('Your role does not allow any of the requested scopes.')) ?>
+            </p>
+        <?php endif; ?>
+        <?php if ($consent->getRefusedScopes()): ?>
+            <p class="message message-warning">
+                <?= $escaper->escapeHtml(__(
+                    'Not granted, your role does not allow them: %1',
+                    implode(', ', $consent->getRefusedScopes())
+                )) ?>
+            </p>
+        <?php endif; ?>
+        <form method="post" action="<?= $escaper->escapeUrl($consent->getDecideUrl()) ?>">
+            <?= $block->getBlockHtml('formkey') ?>
+            <?php if ($grantable): ?>
+                <button type="submit" name="decision" value="approve" class="action-primary">
+                    <span><?= $escaper->escapeHtml(__('Approve')) ?></span>
+                </button>
+            <?php endif; ?>
+            <button type="submit" name="decision" value="deny" class="action-secondary">
+                <span><?= $escaper->escapeHtml(__('Deny')) ?></span>
+            </button>
+        </form>
+    </div>
+</div>

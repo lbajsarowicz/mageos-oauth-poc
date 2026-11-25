@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2026 Mage-OS
+ * All Rights Reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="MageOS\OauthApi\Api\ResourceServerRegistryInterface">
+        <arguments>
+            <argument name="resourceServers" xsi:type="array">
+                <item name="rest" xsi:type="array">
+                    <item name="path" xsi:type="string">/rest</item>
+                    <item name="label" xsi:type="string">REST API</item>
+                    <item name="scopes" xsi:type="array">
+                        <item name="webapi" xsi:type="array">
+                            <item name="description" xsi:type="string">Call the REST API with the permissions of your admin role</item>
+                            <item name="acl_resource" xsi:type="string">Magento_Backend::admin</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
